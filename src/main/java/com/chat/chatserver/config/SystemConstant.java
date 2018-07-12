@@ -27,6 +27,8 @@ public class SystemConstant {
 
     public static final String ROOMNAME_BLANK = "聊天室名不能为空";
 
+    public static final String USER_HAS_LOGIN = "该账户已在别处登录";
+
     public static final Integer SUCCESS = 0;
 
     public static final Integer FAIL = -1;

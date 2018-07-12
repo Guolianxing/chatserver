@@ -101,9 +101,17 @@ public class UserService {
             return response;
         }
 
+        SessionContext context = SessionContext.getInstance();
+
+        if (context.isLogin(username)) {
+            response.setStatus(SystemConstant.FAIL);
+            response.setMsg(SystemConstant.USER_HAS_LOGIN);
+            return response;
+        }
+
         String sessionId = UUID.randomUUID().toString().replace("-", "");
 
-        SessionContext context = SessionContext.getInstance();
+
         context.addSession(sessionId, user);
 
         response.setStatus(SystemConstant.SUCCESS);

@@ -4,6 +4,7 @@ import com.chat.chatserver.entity.TbUser;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Create by Guolianxing on 2018/7/5.
@@ -47,6 +48,16 @@ public class SessionContext {
             return null;
         }
         return map.get(sessionId);
+    }
+
+    public synchronized Boolean isLogin(String username) {
+        Set<String> users = map.keySet();
+        for (String name : users) {
+            if (username.equals(map.get(name).getUsername())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
