@@ -55,26 +55,19 @@ public class UserService {
 
         String reg =  "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D\\w]{2,10}$";
         Pattern pattern = Pattern.compile(reg);
-
         if (!pattern.matcher(user.getUsername()).matches()) {
             response.setStatus(SystemConstant.FAIL);
             response.setMsg(SystemConstant.USERNAEM_STYLE_ERROR);
             return response;
         }
 
-
         String password = DigestUtils.md5DigestAsHex((user.getPassword() + key).getBytes("UTF-8"));
         user.setPassword(password);
-
         Random random = new Random();
         Integer num = random.nextInt(6) + 1;
-
         String img = SystemConstant.SERVER_HOST + "/imgs/default0" + num + ".png";
-
         user.setPhoto(img);
-
         userRepository.addUser(user);
-
         return SystemConstant.OP_SUCCESS;
     }
 
@@ -94,7 +87,6 @@ public class UserService {
         }
 
         String hex = DigestUtils.md5DigestAsHex((password + key).getBytes("UTF-8"));
-
         if (!hex.equals(user.getPassword())) {
             response.setStatus(SystemConstant.FAIL);
             response.setMsg(SystemConstant.PASSWORD_ERROR);
@@ -102,16 +94,14 @@ public class UserService {
         }
 
         SessionContext context = SessionContext.getInstance();
-
-        if (context.isLogin(username)) {
+        if (context.isLogin(user.getSessionId())) {
             response.setStatus(SystemConstant.FAIL);
             response.setMsg(SystemConstant.USER_HAS_LOGIN);
             return response;
         }
-
         String sessionId = UUID.randomUUID().toString().replace("-", "");
-
-
+        // 本次会话Id写入数据库
+        userRepository.updateSessionId(sessionId, user.getUserId());
         context.addSession(sessionId, user);
 
         response.setStatus(SystemConstant.SUCCESS);
@@ -240,6 +230,7 @@ public class UserService {
             return response;
         }
 
+        // 从聊天室移除用户，如果移除后人数为0则删除该聊天室
         Set<WebSocketSession> users = SocketHandler.rooms.get(roomName);
         users.remove(session.getSocketSession());
         if (users.size() == 0) {

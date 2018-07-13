@@ -12,16 +12,19 @@ public class TbUser {
     private String username;
     private String password;
     private String photo;
+    private String sessionId;
+
     private WebSocketSession socketSession;
 
     public TbUser() {
     }
 
-    public TbUser(Integer userId, String username, String password, String photo, WebSocketSession socketSession) {
+    public TbUser(Integer userId, String username, String password, String photo, String sessionId, WebSocketSession socketSession) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.photo = photo;
+        this.sessionId = sessionId;
         this.socketSession = socketSession;
     }
 
@@ -57,6 +60,14 @@ public class TbUser {
         this.photo = photo;
     }
 
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
     public WebSocketSession getSocketSession() {
         return socketSession;
     }
@@ -72,7 +83,7 @@ public class TbUser {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", photo='" + photo + '\'' +
-                ", socketSession=" + socketSession +
+                ", sessionId='" + sessionId + '\'' +
                 '}';
     }
 

@@ -36,8 +36,15 @@ public class UserRepository {
             user.setUsername(resultSet.getString("username"));
             user.setPassword(resultSet.getString("password"));
             user.setPhoto(resultSet.getString("photo"));
+            user.setSessionId(resultSet.getString("sessionId"));
         });
         return user;
+    }
+
+    public Integer updateSessionId(String sessionId, Integer userId) {
+        String sql = "update tb_user set sessionId = ? where userId = ? ";
+        Object[] params = new Object[]{sessionId, userId};
+        return jdbcTemplate.update(sql, params);
     }
 
 
