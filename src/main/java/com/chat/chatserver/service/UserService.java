@@ -46,18 +46,19 @@ public class UserService {
      */
     public ResponseDto register(TbUser user) throws Exception {
         ResponseDto response = new ResponseDto();
-        Integer count = userRepository.countByUsername(user.getUsername());
-        if (count > 0) {
-            response.setStatus(SystemConstant.FAIL);
-            response.setMsg(SystemConstant.USERNAME_EXIST);
-            return response;
-        }
 
         String reg =  "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D\\w]{2,10}$";
         Pattern pattern = Pattern.compile(reg);
         if (!pattern.matcher(user.getUsername()).matches()) {
             response.setStatus(SystemConstant.FAIL);
             response.setMsg(SystemConstant.USERNAEM_STYLE_ERROR);
+            return response;
+        }
+
+        Integer count = userRepository.countByUsername(user.getUsername());
+        if (count > 0) {
+            response.setStatus(SystemConstant.FAIL);
+            response.setMsg(SystemConstant.USERNAME_EXIST);
             return response;
         }
 
