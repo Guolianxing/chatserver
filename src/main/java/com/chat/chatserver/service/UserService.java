@@ -102,6 +102,7 @@ public class UserService {
         String sessionId = UUID.randomUUID().toString().replace("-", "");
         // 本次会话Id写入数据库
         userRepository.updateSessionId(sessionId, user.getUserId());
+        user.setSessionId(sessionId);
         context.addSession(sessionId, user);
 
         response.setStatus(SystemConstant.SUCCESS);
