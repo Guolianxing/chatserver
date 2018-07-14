@@ -124,13 +124,10 @@ public class UserService {
      * @Date: 2018/7/5 18:39
      */
     public ResponseDto logout(String token) throws Exception {
-        ResponseDto responseDto = new ResponseDto();
-        responseDto.setStatus(SystemConstant.SUCCESS);
-        responseDto.setMsg(SystemConstant.OP_SUCCESS_MSG);
         SessionContext context = SessionContext.getInstance();
         TbUser session = context.getSession(token);
         if (session == null || session.getSocketSession() == null) {
-            return responseDto;
+            return SystemConstant.OP_SUCCESS;
         }
 
         WebSocketSession socketSession = session.getSocketSession();
@@ -138,7 +135,7 @@ public class UserService {
             socketSession.close();
         }
 
-        return responseDto;
+        return SystemConstant.OP_SUCCESS;
     }
 
     /**

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SessionInterceptor extends HandlerInterceptorAdapter {
 
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String sessionId = request.getParameter("token");

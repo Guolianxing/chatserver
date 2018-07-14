@@ -23,6 +23,7 @@ import java.util.*;
 public class SocketHandler extends AbstractWebSocketHandler {
 
     // 这里要用线程安全的集合类
+    // 聊天室名和聊天室内所有用户的websocketsession对象的映射表
     public static Map<String, Set<WebSocketSession>> rooms = Collections.synchronizedMap(new HashMap<>());
 
     // socketSessionId与会话管理sessionId的映射表

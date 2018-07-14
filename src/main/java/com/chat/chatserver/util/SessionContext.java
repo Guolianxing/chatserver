@@ -55,6 +55,4 @@ public class SessionContext {
         TbUser tbUser = getSession(sessionId);
         return tbUser != null;
     }
-
-
 }
